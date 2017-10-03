@@ -26,11 +26,18 @@
     }
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [input enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            
+            // Define Block
+            void (^loopingPrintBlock)(id, NSUInteger, BOOL *);
+            
+            // Assign Block
+            loopingPrintBlock = ^(id obj, NSUInteger idx, BOOL *stop){
                 NSLog(@"Looping in background using block for the %@ time", obj);
-            }];
+            };
+            
+            // Call block
+            [input enumerateObjectsUsingBlock:loopingPrintBlock];
         });
     });
 }
@@ -45,6 +52,7 @@
 
 - (void)updateGUI:(UILabel *)multiThreadedLabel
 {
+    // Use inline blocks 
     dispatch_async(dispatch_queue_create("getDbSize", NULL), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [multiThreadedLabel setText:@"Changed during background execution."];
