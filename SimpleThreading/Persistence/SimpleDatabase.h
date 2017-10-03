@@ -13,6 +13,7 @@
 
 - (void)loopAndPrintInBackground;
 - (void)lookAndPrintInBlock;
+- (void)loopAndPrintInNSThread;
 - (void)updateGUI:(UILabel *)multiThreadedLabel;
 
 @end

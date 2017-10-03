@@ -35,6 +35,14 @@
     });
 }
 
+- (void)loopAndPrintInNSThread
+{
+    for(int i = 0; i < 100; i++)
+    {
+        NSLog(@"Looping in background using NSThread for the %i time", i);
+    }
+}
+
 - (void)updateGUI:(UILabel *)multiThreadedLabel
 {
     dispatch_async(dispatch_queue_create("getDbSize", NULL), ^{

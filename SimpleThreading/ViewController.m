@@ -12,6 +12,7 @@
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *multiThreadedLabel;
 @property (strong, nonatomic) SimpleDatabase *database;
+@property (strong, nonatomic) NSThread *backgroundThread;
 
 @end
 
@@ -30,12 +31,16 @@
     // Multithreading using blocks to return information
     [_database lookAndPrintInBlock];
     
-    
+    // Multithreading using NSThread class
+    [_backgroundThread start];
 }
 
 - (void)initializeVariables
 {
     _database = [[SimpleDatabase alloc] init];
+    
+    _backgroundThread = [[NSThread alloc] initWithTarget:_database
+                                                selector:@selector(loopAndPrintInNSThread) object:nil];
 }
 
 // Mark: Actions
