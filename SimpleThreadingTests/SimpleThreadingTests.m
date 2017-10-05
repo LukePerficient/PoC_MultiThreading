@@ -7,8 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "SimpleDatabase.h"
 
 @interface SimpleThreadingTests : XCTestCase
+
+@property (strong,nonatomic) SimpleDatabase *database;
+@property (strong,nonatomic) NSThread *backgroundThread;
 
 @end
 
@@ -16,24 +20,31 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    _database = [[SimpleDatabase alloc] init];
+    _backgroundThread = [[NSThread alloc] initWithTarget:_database
+                                                selector:@selector(loopAndPrintInNSThread) object:nil];
+    
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
+    _database = nil;
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testExecuteBackgroundThreadWithPerformSelectorInBackgroundMethod {
+    // Multithreading with separate method running in background
+    [_database performSelectorInBackground:@selector(loopAndPrintInBackground) withObject:nil];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testExecuteBackgroundThreadWithDispatchAsyncMethod {
+    // Multithreading using blocks to return information
+    [_database lookAndPrintInBlock];
+}
+
+- (void)testExecuteBackgroundThreadWithNSThreadClass {
+    // Multithreading using NSThread class
+    [_backgroundThread start];
 }
 
 @end

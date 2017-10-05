@@ -10,16 +10,24 @@
 
 @implementation SimpleDatabase
 
-- (void)loopAndPrintInBackground
+- (BOOL)loopAndPrintInBackground
 {
+    BOOL isComplete = NO;
+    
     for(int i = 0; i < 100; i++)
     {
         NSLog(@"Looping in background for the %i time", i);
     }
+    
+    isComplete = YES;
+    
+    return isComplete;
 }
 
-- (void)lookAndPrintInBlock
+- (BOOL)lookAndPrintInBlock
 {
+    BOOL isComplete = NO;
+    
     NSMutableArray *input = [[NSMutableArray alloc] init];
     for (int i = 0; i < 100; i++) {
         [input addObject:[NSNumber numberWithInt:i]];
@@ -40,14 +48,24 @@
             [input enumerateObjectsUsingBlock:loopingPrintBlock];
         });
     });
+    
+    isComplete = YES;
+    
+    return isComplete;
 }
 
-- (void)loopAndPrintInNSThread
+- (BOOL)loopAndPrintInNSThread
 {
+    BOOL isComplete = NO;
+    
     for(int i = 0; i < 100; i++)
     {
         NSLog(@"Looping in background using NSThread for the %i time", i);
     }
+    
+    isComplete = YES;
+    
+    return isComplete;
 }
 
 - (void)updateGUI:(UILabel *)multiThreadedLabel

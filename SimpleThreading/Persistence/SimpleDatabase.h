@@ -11,9 +11,9 @@
 
 @interface SimpleDatabase : NSObject
 
-- (void)loopAndPrintInBackground;
-- (void)lookAndPrintInBlock;
-- (void)loopAndPrintInNSThread;
+- (BOOL)loopAndPrintInBackground;
+- (BOOL)lookAndPrintInBlock;
+- (BOOL)loopAndPrintInNSThread;
 - (void)updateGUI:(UILabel *)multiThreadedLabel;
 
 @end
